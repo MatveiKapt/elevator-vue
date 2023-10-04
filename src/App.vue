@@ -1,15 +1,19 @@
 <template>
   <div class="app-wrapper">
-    <floors-list :floorsCount="floorsCount"></floors-list>
+    <floors-list :floorsCount="floorsCount" :currentFloor="currentFloor"></floors-list>
+
   </div>
 
   <div class="elevator-wrapper">
-    <mines-list :elevatorsCount="elevatorsCount" :floorsCount="floorsCount"></mines-list>
+    <mines-list :elevatorsCount="elevatorsCount" :floorsCount="floorsCount" :currentFloor="currentFloor"></mines-list>
+
     <buttons-list :floorsCount="floorsCount"></buttons-list>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import FloorsList from '@/components/FloorsList/FloorsList';
 import MinesList from '@/components/MinesList/MinesList';
 import ButtonsList from '@/components/ButtonsList/ButtonsList';
@@ -24,8 +28,14 @@ export default {
     return {
       floorsCount: 5,
       elevatorsCount: 1,
+      callQueue: [],
+      isMoving: false,
     }
   },
+  computed: {
+    ...mapState(['currentFloor']),
+  },
+
 };
 </script>
 

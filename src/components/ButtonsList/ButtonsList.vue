@@ -1,27 +1,52 @@
 <template>
   <ul class="buttons-list">
-      <li class="buttons__item" v-for="index of floorsCount" :key="index">
-        <button class="buttons__button" type="button">
-          {{ index }}
-        </button>
-      </li>
-    </ul>
+    <li class="buttons__item" v-for="index of floorsCount" :key="index">
+      <button
+        class="buttons__button"
+        type="button"
+        @click="callElevator(index)"
+      >
+        {{ index }}
+      </button>
+    </li>
+  </ul>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   props: {
     floorsCount: {
       type: Number,
       required: true,
     },
-    floor: {
-      type: Number,
-      required: true,
+  },
+  computed: {
+    ...mapGetters(['getCurrentFloor']),
+    isCurrentFloor: {
+      get() {
+        return this.getCurrentFloor === this.floor;
+      },
+      set(value) {
+  if (value) {
+    this.addFloorToCallQueue(this.floor);
+    this.$nextTick(() => {
+      const stageHeight = 100;
+      const elevator = document.querySelector('.elevator');
+      elevator.style.bottom = `${stageHeight * this.floor}px`;
+    });
+  }
+},
+
     },
+  },
+  methods: {
+    ...mapActions(['addFloorToCallQueue', 'callElevator']),
   },
 };
 </script>
+
 
 
 <style>

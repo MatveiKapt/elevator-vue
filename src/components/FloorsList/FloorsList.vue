@@ -5,12 +5,20 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex';
+
 export default {
   props: {
     floorsCount: {
       type: Number,
       required: true,
     },
+  },
+  computed: {
+    ...mapGetters(['getCurrentFloor', 'getIsMoving']),
+  },
+  methods: {
+    ...mapActions(['addFloorToCallQueue']),
   },
 };
 </script>

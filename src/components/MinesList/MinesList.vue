@@ -10,6 +10,7 @@
 
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   props: {
     elevatorsCount: {
@@ -19,8 +20,11 @@ export default {
     floorsCount: {
       type: Number,
       required: true,
+    },
+  },
+  computed: {
+    ...mapGetters(['getCurrentFloor', 'getIsMoving']),
     }
-  }
 }
 </script>
 
